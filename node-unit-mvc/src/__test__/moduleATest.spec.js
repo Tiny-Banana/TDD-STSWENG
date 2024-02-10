@@ -128,8 +128,55 @@ describe('Module A', () => {
     });
 
     describe('update', () => {
-        it.todo('should update a specific post')
-        it.todo('should return the error message');
+        var updatePostStub;
+
+        beforeEach(() => {
+            // before every test case setup first
+            res = {
+                json: sinon.spy(),
+                status: sinon.stub().returns({ end: sinon.spy() })
+            };
+        });
+
+        afterEach(() => {
+            // executed after the test case
+            updatePostStub.restore();
+        });
+
+       
+        it('should update a specific post', async () => {
+            expectedResult = {
+                _id: '507asdghajsdhjgasd',
+                title: 'My first test post',
+                content: 'Random content',
+                author: 'stswenguser',
+            };
+
+            updatePostStub = sinon.stub(ModuleA, 'updatePost').yields(null, expectedResult);
+
+            // Act
+            await PostController.update(req, res);
+
+            // Assert
+            sinon.assert.calledWith(ModuleA.updatePost, req.body);
+            sinon.assert.calledWith(res.json, sinon.match({ title: req.body.title }));
+            sinon.assert.calledWith(res.json, sinon.match({ content: req.body.content }));
+            sinon.assert.calledWith(res.json, sinon.match({ author: req.body.author }));
+        });
+
+        it('should return the error message', () => {
+             // Arrange
+             updatePostStub = sinon.stub(ModuleA, 'updatePost').yields(error);
+
+             // Act
+             PostController.update(req, res);
+ 
+             // Assert
+             sinon.assert.calledWith(ModuleA.updatePost, req.body);
+             sinon.assert.calledWith(res.status, 500);
+             sinon.assert.calledOnce(res.status(500).end);
+        });
+
     });
 
     describe('getAllPosts', () => {
