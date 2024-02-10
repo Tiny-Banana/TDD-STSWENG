@@ -1,6 +1,6 @@
 const sinon = require('sinon');
 const PostModel = require('../../models/post.model');
-// const ModuleA = require('../../src/moduleA');
+const ModuleA = require('../../src/moduleA');
 const PostController = require('../../controllers/post.controller');
 
 describe('Module A', () => {
@@ -77,14 +77,64 @@ describe('Module A', () => {
     });
 
     describe('findPost', () => {
-        it.todo('should return the found post object');
-        it.todo('should return the error message');
+        var findPostStub;
+
+        beforeEach(() => {
+            // before every test case setup first
+            res = {
+                json: sinon.spy(),
+                status: sinon.stub().returns({ end: sinon.spy() })
+            };
+        });
+
+        afterEach(() => {
+            // executed after the test case
+            findPostStub.restore();
+        });
+
+        it('should return the found post object', async () => {
+            // Arrange
+            expectedResult = {
+                _id: '507asdghajsdhjgasd',
+                title: 'My first test post',
+                content: 'Random content',
+            };
+
+            findPostStub = sinon.stub(ModuleA, 'findPost').yields(null, expectedResult);
+
+            // Act
+            PostController.findPost(req, res);
+
+            // Assert
+            sinon.assert.calledWith(ModuleA.findPost, req.body);
+            sinon.assert.calledWith(res.json, sinon.match({ title: req.body.title }));
+            sinon.assert.calledWith(res.json, sinon.match({ content: req.body.content }));
+
+        });
+
+        // Error Scenario
+        it('should return the error message', () => {
+            // Arrange
+            findPostStub = sinon.stub(ModuleA, 'findPost').yields(error);
+
+            // Act
+            PostController.findPost(req, res);
+
+            // Assert
+            sinon.assert.calledWith(ModuleA.findPost, req.body);
+            sinon.assert.calledWith(res.status, 500);
+            sinon.assert.calledOnce(res.status(500).end);
+        });
     });
 
     describe('update', () => {
+        it.todo('should update a specific post')
+        it.todo('should return the error message');
     });
 
     describe('getAllPosts', () => {
+        it.todo('should return all posts')
+        it.todo('should return the error message');
     });
 
 });
