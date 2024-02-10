@@ -1,4 +1,5 @@
 const PostModel = require('../models/post.model');
+// const ModuleA = require('../src/moduleA');
 const PostController = {};
 
 PostController.create = (req, res) => {
