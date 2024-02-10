@@ -15,3 +15,23 @@
   12 npm test                                                                                                                                             
   13 git commit -am "Add failing test for Module A"                                                                                                       
 
+
+  Id     Duration CommandLine
+  --     -------- -----------
+   1        0.204 try { . "c:\Users\AJ\AppData\Local\Programs\Microsoft VS Code\re…
+   2        9.453 git clone https://github.com/Tiny-Banana/TDD-STSWENG.git
+   3        0.013 cd .\TDD-STSWENG\
+   4        0.020 cd .\node-unit-mvc\
+   5       22.643 npm install
+   6     5:09.517 npm test
+   7     2:04.250 npm test
+   8     1:18.099 npm test
+   9     2:30.241 npm test
+  10     2:54.634 npm test
+  11     1:30.352 npm test
+  12       14.623 npm test
+  13        0.897 history > history.txt
+  14        0.795 history >> history.txt
+  15        1.112 git commit -am "Add failing test for next Module A functionality"
+  16        9.133 git pull origin main
+
