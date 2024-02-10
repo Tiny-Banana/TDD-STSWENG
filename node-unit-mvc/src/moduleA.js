@@ -26,6 +26,15 @@ const updatePost = async (req, next) => {
     }
 }
 
+const getAllPosts = async (req, next) => {
+    try {
+        const posts = await Post.find();
+        next(null, posts)
+    } catch (error) {
+        next(error);
+    }
+}
+
 module.exports = {
-    findPost, updatePost
+    findPost, updatePost, getAllPosts
 };
